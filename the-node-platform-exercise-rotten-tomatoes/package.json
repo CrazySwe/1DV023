@@ -4,8 +4,23 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "eslint"
+    "lint": ".\\node_modules\\.bin\\eslint . || exit 0"
   },
   "author": "Kevin Cederholm",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "xml2js": "^0.4.23"
+  },
+  "devDependencies": {
+    "@lnu/eslint-config": "^1.0.6",
+    "eslint": "^6.8.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-jsdoc": "^20.3.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
+  },
+  "eslintConfig": {
+    "extends": "@lnu"
+  }
 }
