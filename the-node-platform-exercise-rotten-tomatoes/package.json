@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "start": "node .\\app.js",
     "lint": ".\\node_modules\\.bin\\eslint . || exit 0"
   },
   "author": "Kevin Cederholm",
