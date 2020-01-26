@@ -21,7 +21,6 @@ function printMoviesAverageRating (filePath) {
     xml2js.parseString(data, (err, result) => {
       if (err) throw err
       const ratings = result.movies.movie.map(movie => Number(movie.rating))
-      // console.log('Rotten Tomatoes: ' + ratings.reduce((acc, val) => acc + val) / ratings.length + ' %')
       console.log('Rotten Tomatoes: ' + average(ratings) + ' %')
     })
   } else {
