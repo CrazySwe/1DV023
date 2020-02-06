@@ -17,9 +17,7 @@ console.log('Average rating')
 const imdbPromise = reviewer.printMoviesAverageRating(imdbFilePath)
 const rottenTomatoPromise = reviewer.printMoviesAverageRating(rottenTomatoFilePath)
 
-;(async () => {
-  Promise.all([imdbPromise, rottenTomatoPromise]).then(val => {
-    console.log('IMDB: ' + val[0])
-    console.log('Rotten Tomatoes: ' + val[1] + ' %')
-  })
-})()
+Promise.all([imdbPromise, rottenTomatoPromise]).then(values => {
+  console.log('IMDB: ' + values[0])
+  console.log('Rotten Tomatoes: ' + values[1] + ' %')
+})

@@ -6,8 +6,9 @@
 'use strict'
 
 // const fs = require('fs')
+// const fsPromise = require('./fs-promise.js')
 
-const fsPromise = require('./fs-promise.js')
+const fs = require('fs-extra')
 const xml2js = require('xml2js')
 
 /**
@@ -16,22 +17,17 @@ const xml2js = require('xml2js')
  * @param {string} filePath - Path to the file.
  */
 async function printMoviesAverageRating (filePath) {
-  const data = await fsPromise.readFile(filePath, { encoding: 'utf8', flag: 'r' })
-
+  const data = await fs.readFile(filePath, { encoding: 'utf8', flag: 'r' })
   const average = arr => arr.reduce((acc, val) => acc + val) / arr.length
 
-  return new Promise((resolve, reject) => {
-    if (data.startsWith('<?xml')) {
-      xml2js.parseString(data, (err, result) => {
-        if (err) throw err
-        const ratings = result.movies.movie.map(movie => Number(movie.rating))
-        resolve(average(ratings))
-      })
-    } else {
-      const ratings = JSON.parse(data).map(movie => movie.rating)
-      resolve(average(ratings))
-    }
-  })
+  let ratings = []
+  if (data.startsWith('<?xml')) {
+    ratings = await xml2js.parseStringPromise(data)
+      .then(result => result.movies.movie.map(movie => Number(movie.rating)))
+  } else {
+    ratings = JSON.parse(data).map(movie => Number(movie.rating))
+  }
+  return average(ratings)
 }
 
 module.exports.printMoviesAverageRating = printMoviesAverageRating
