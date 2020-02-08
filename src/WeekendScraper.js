@@ -25,22 +25,25 @@ class WeekendScraper extends Scraper {
     // console.dir(url)
   }
 
-  run () {
+  async run () {
     // Running scraper here.
     process.stdout.write('Scraping links...')
-    const links = this.scrapeLinks()
+    const html = await this.getHTMLPromise()
+    console.dir(html)
+
     // 1. Scrape links for Calendar, Cinema and Restaurant
     process.stdout.write('OK\n')
 
     // Use the 3 links to scrape rest.
-    const CalScraper = new CalendarScraper('http://vhost3.lnu.se:20080/calendar/')
-    const CinScraper = new CinemaScraper('Cinema:url')
-    const RestScraper = new RestaurantScraper('Restaurant:url')
+    const calScraper = new CalendarScraper('http://vhost3.lnu.se:20080/calendar/')
+    const cinScraper = new CinemaScraper('Cinema:url')
+    const restScraper = new RestaurantScraper('Restaurant:url')
     //
     //
 
     process.stdout.write('Scraping available days...')
     // 2.
+    // const days = await calScraper.getDays()
     process.stdout.write('OK\n')
 
     process.stdout.write('Scraping showtimes...')
