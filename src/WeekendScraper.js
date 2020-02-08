@@ -25,6 +25,8 @@ class WeekendScraper {
     // 1. Scrape links for Calendar, Cinema and Restaurant
     process.stdout.write('OK\n')
 
+    // Use the 3 links to scrape rest.
+
     process.stdout.write('Scraping available days...')
     // 2.
     process.stdout.write('OK\n')
