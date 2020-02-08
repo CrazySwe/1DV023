@@ -8,7 +8,7 @@
  */
 'use strict'
 
-const { WeekendScraper } = require('./src/WeekendScraper.js')
+const WeekendScraper = require('./src/WeekendScraper.js')
 
-const scraper = new WeekendScraper(process.argv.slice(2)[0])
+const scraper = new WeekendScraper(process.argv[2])
 scraper.run()
