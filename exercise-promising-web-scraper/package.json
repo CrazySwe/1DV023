@@ -8,6 +8,10 @@
     "lint": "npx eslint . || exit 0",
     "lint:fix": "npx eslint . --fix || exit 0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.lnu.se:1dv023/student/kc222en/exercises.git"
+  },
   "author": "Kevin Cederholm",
   "license": "MIT",
   "devDependencies": {
@@ -23,6 +27,7 @@
     "extends": "@lnu"
   },
   "dependencies": {
-    "fs-extra": "^8.1.0"
+    "fs-extra": "^8.1.0",
+    "request": "^2.88.0"
   }
 }
