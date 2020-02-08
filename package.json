@@ -25,5 +25,8 @@
   },
   "eslintConfig": {
     "extends": "@lnu"
+  },
+  "dependencies": {
+    "request": "^2.88.0"
   }
 }
