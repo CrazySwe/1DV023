@@ -55,16 +55,12 @@ class WeekendScraper extends Scraper {
     //   console.dir(element)
     //   // console.dir(index)
     // })
-
-    // 1. Scrape links for Calendar, Cinema and Restaurant
     process.stdout.write('OK\n')
 
     // Use the 3 links to scrape rest.
     const calScraperPromise = new CalendarScraper(calendarUrl).getAvailableDays()
     const cinScraperPromise = new CinemaScraper(cinemaUrl).getAvailableMovies()
     const restScraperPromise = new RestaurantScraper(restaurantUrl).getAvailableTimes()
-    //
-    //
 
     process.stdout.write('Scraping available days...')
     // 2.
@@ -81,7 +77,7 @@ class WeekendScraper extends Scraper {
     process.stdout.write('Scraping possible reservations...')
     // 4.
     const openReservations = await restScraperPromise
-    // console.dir(reservations)
+    // console.dir(openReservations)
     process.stdout.write('OK\n')
 
     process.stdout.write('\nRecommendations\n')
@@ -92,7 +88,30 @@ class WeekendScraper extends Scraper {
   }
 
   printRecommendations (calendar, cinema, restaurant) {
-    process.stdout.write('Lets recommend...')
+    const isPossible = calendar.reduce((acc, value, index) => { return (acc |= value.available) }, 0)
+    if (!isPossible) {
+      process.stdout.write('No available days found.')
+      return null
+    }
+    calendar.map((weekDay, index) => {
+      if (weekDay.available) {
+        cinema.filter(movie => movie.day.toLowerCase() === weekDay.day.toLowerCase())
+          .map(movies => {
+            restaurant.filter(foodTime => foodTime.day.toLowerCase() === weekDay.day.toLowerCase())
+              .map(foodTime => {
+                const eatingTime = Number(movies.time.substr(0, 2)) + 2
+                if (eatingTime === Number(foodTime.start)) {
+                  this.printRecommendation(weekDay.day, movies.movie, movies.time, foodTime.start + ':00', foodTime.end + ':00')
+                }
+              })
+          })
+      }
+    })
+  }
+
+  printRecommendation (day, movieTitle, movieStart, foodStart, foodEnd) {
+    day = day.charAt(0).toUpperCase() + day.substring(1)
+    process.stdout.write(`* On ${day} the movie "${movieTitle}" starts at ${movieStart} and there is a free table between ${foodStart}-${foodEnd}.\n`)
   }
 }
 
