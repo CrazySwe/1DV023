@@ -20,9 +20,6 @@ const cheerio = require('cheerio')
 class WeekendScraper extends Scraper {
   constructor (url = 'http://vhost3.lnu.se:20080/weekend') {
     super(url)
-    // Initialize everything.
-    this.mainUrl = url
-    this.calendarScraper = url
   }
 
   async run () {
@@ -45,7 +42,7 @@ class WeekendScraper extends Scraper {
     process.stdout.write('OK\n')
 
     // Use the 3 links to scrape rest.
-    const calScraper = new CalendarScraper(calendarUrl)
+    const calScraperPromise = new CalendarScraper(calendarUrl).getAvailableDays()
     const cinScraper = new CinemaScraper(cinemaUrl)
     const restScraper = new RestaurantScraper(restaurantUrl)
     //
@@ -53,7 +50,8 @@ class WeekendScraper extends Scraper {
 
     process.stdout.write('Scraping available days...')
     // 2.
-    // const days = await calScraper.getAvailableDays()
+    const availableDays = await calScraperPromise
+    // console.dir(availableDays)
     process.stdout.write('OK\n')
 
     process.stdout.write('Scraping showtimes...')
