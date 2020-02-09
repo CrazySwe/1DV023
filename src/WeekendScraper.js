@@ -17,11 +17,29 @@ const CinemaScraper = require('../lib/CinemaScraper.js')
 const RestaurantScraper = require('../lib/RestaurantScraper.js')
 const cheerio = require('cheerio')
 
+/**
+ * The main application for scraping multiple sources and puzzling
+ * a weekend plan together.
+ *
+ * @class WeekendScraper
+ * @augments {Scraper}
+ */
 class WeekendScraper extends Scraper {
+  /**
+   * Creates an instance of WeekendScraper.
+   *
+   * @param {string} [url='http://vhost3.lnu.se:20080/weekend'] - URL to main site to scrape from.
+   * @memberof WeekendScraper
+   */
   constructor (url = 'http://vhost3.lnu.se:20080/weekend') {
     super(url)
   }
 
+  /**
+   * Runs the main function of scraping from different sources and presenting a recommendation.
+   *
+   * @memberof WeekendScraper
+   */
   async run () {
     // Running scraper here.
     process.stdout.write('Scraping links...')
@@ -51,16 +69,19 @@ class WeekendScraper extends Scraper {
     process.stdout.write('Scraping available days...')
     // 2.
     const availableDays = await calScraperPromise
-    // console.dir(availableDays)
+    console.dir(availableDays)
     process.stdout.write('OK\n')
 
     process.stdout.write('Scraping showtimes...')
     // 3.
-    // const times
+    const showTimes = await cinScraper
+    console.dir(showTimes)
     process.stdout.write('OK\n')
 
     process.stdout.write('Scraping possible reservations...')
     // 4.
+    const reservations = await restScraper
+    console.dir(reservations)
     process.stdout.write('OK\n')
 
     process.stdout.write('\nRecommendations\n')
