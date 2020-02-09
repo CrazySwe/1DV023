@@ -57,25 +57,21 @@ class WeekendScraper extends Scraper {
     // })
     process.stdout.write('OK\n')
 
-    // Use the 3 links to scrape rest.
     const calScraperPromise = new CalendarScraper(calendarUrl).getAvailableDays()
     const cinScraperPromise = new CinemaScraper(cinemaUrl).getAvailableMovies()
     const restScraperPromise = new RestaurantScraper(restaurantUrl).getAvailableTimes()
 
     process.stdout.write('Scraping available days...')
-    // 2.
     const availableDays = await calScraperPromise
     // console.dir(availableDays)
     process.stdout.write('OK\n')
 
     process.stdout.write('Scraping showtimes...')
-    // 3.
     const showTimes = await cinScraperPromise
     // console.dir(showTimes)
     process.stdout.write('OK\n')
 
     process.stdout.write('Scraping possible reservations...')
-    // 4.
     const openReservations = await restScraperPromise
     // console.dir(openReservations)
     process.stdout.write('OK\n')
@@ -84,31 +80,48 @@ class WeekendScraper extends Scraper {
     process.stdout.write('===============\n')
 
     this.printRecommendations(availableDays, showTimes, openReservations)
-    // 5. Output
   }
 
+  /**
+   * Summarizes the data gotten and matches the availability between calendar, cinema and restaurant.
+   *
+   * @param {object[]} calendar - Object containing calendar data.
+   * @param {object[]} cinema - Object containing weekdays, times and movietitles.
+   * @param {object[]} restaurant - Object containing free times at the restaurant.
+   * @memberof WeekendScraper
+   */
   printRecommendations (calendar, cinema, restaurant) {
     const isPossible = calendar.reduce((acc, value, index) => { return (acc |= value.available) }, 0)
     if (!isPossible) {
       process.stdout.write('No available days found.')
-      return null
+    } else {
+      calendar.map((weekDay, index) => {
+        if (weekDay.available) {
+          cinema.filter(movie => movie.day.toLowerCase() === weekDay.day.toLowerCase())
+            .map(movies => {
+              restaurant.filter(foodTime => foodTime.day.toLowerCase() === weekDay.day.toLowerCase())
+                .map(foodTime => {
+                  const eatingTime = Number(movies.time.substr(0, 2)) + 2
+                  if (eatingTime === Number(foodTime.start)) {
+                    this.printRecommendation(weekDay.day, movies.movie, movies.time, foodTime.start + ':00', foodTime.end + ':00')
+                  }
+                })
+            })
+        }
+      })
     }
-    calendar.map((weekDay, index) => {
-      if (weekDay.available) {
-        cinema.filter(movie => movie.day.toLowerCase() === weekDay.day.toLowerCase())
-          .map(movies => {
-            restaurant.filter(foodTime => foodTime.day.toLowerCase() === weekDay.day.toLowerCase())
-              .map(foodTime => {
-                const eatingTime = Number(movies.time.substr(0, 2)) + 2
-                if (eatingTime === Number(foodTime.start)) {
-                  this.printRecommendation(weekDay.day, movies.movie, movies.time, foodTime.start + ':00', foodTime.end + ':00')
-                }
-              })
-          })
-      }
-    })
   }
 
+  /**
+   * Prints out a recommendation string.
+   *
+   * @param {string} day - The day of the week.
+   * @param {string} movieTitle - The title of the movie.
+   * @param {string} movieStart - Time the movie starts.
+   * @param {string} foodStart - The restaurant table reservation start time.
+   * @param {string} foodEnd - The restaurant table reserveration end time.
+   * @memberof WeekendScraper
+   */
   printRecommendation (day, movieTitle, movieStart, foodStart, foodEnd) {
     day = day.charAt(0).toUpperCase() + day.substring(1)
     process.stdout.write(`* On ${day} the movie "${movieTitle}" starts at ${movieStart} and there is a free table between ${foodStart}-${foodEnd}.\n`)
