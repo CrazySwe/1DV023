@@ -61,7 +61,7 @@ class WeekendScraper extends Scraper {
 
     // Use the 3 links to scrape rest.
     const calScraperPromise = new CalendarScraper(calendarUrl).getAvailableDays()
-    const cinScraper = new CinemaScraper(cinemaUrl)
+    const cinScraper = new CinemaScraper(cinemaUrl).getAvailableMovies()
     const restScraper = new RestaurantScraper(restaurantUrl)
     //
     //
@@ -69,19 +69,19 @@ class WeekendScraper extends Scraper {
     process.stdout.write('Scraping available days...')
     // 2.
     const availableDays = await calScraperPromise
-    console.dir(availableDays)
+    // console.dir(availableDays)
     process.stdout.write('OK\n')
 
     process.stdout.write('Scraping showtimes...')
     // 3.
     const showTimes = await cinScraper
-    console.dir(showTimes)
+    // console.dir(showTimes)
     process.stdout.write('OK\n')
 
     process.stdout.write('Scraping possible reservations...')
     // 4.
     const reservations = await restScraper
-    console.dir(reservations)
+    // console.dir(reservations)
     process.stdout.write('OK\n')
 
     process.stdout.write('\nRecommendations\n')
