@@ -4,15 +4,31 @@
   "description": "kc222en-assignment-2",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "lint": "npx eslint . || exit 0",
+    "lint:fix": "npx eslint . --fix || exit 0"
   },
   "repository": {
     "type": "git",
     "url": "git@gitlab.lnu.se:1dv023/student/kc222en/assignment-2.git"
   },
   "keywords": [
-    "snippets"
+    "1DV023",
+    "snippets",
+    "assignment2"
   ],
   "author": "Kevin Cederholm",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@lnu/eslint-config": "^1.0.6",
+    "eslint": "^6.8.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsdoc": "^21.0.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
+  },
+  "eslintConfig": {
+    "extends": "@lnu"
+  }
 }
