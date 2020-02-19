@@ -8,12 +8,25 @@
 'use strict'
 
 const express = require('express')
-// const exphbs = require('express-hbs')
-// const path = require('path')
+const exphbs = require('express-hbs')
+const path = require('path')
 
 const app = express()
 
 app.set('port', process.env.PORT || 8000)
+app.set('view engine', 'hbs')
+
+// View engine
+app.engine('hbs', exphbs.express4({
+  defaultLayout: path.join(__dirname, 'views', 'layouts', 'default'),
+  partialsDir: path.join(__dirname, 'views', 'partials'),
+  layoutsDir: path.join(__dirname, 'views', 'layouts')
+
+}))
+
+app.set('views', path.join(__dirname, 'views'))
+
+app.get('/', (req, res) => { res.render('index') })
 
 // Set the 404 error page
 app.use((err, req, res, next) => {
