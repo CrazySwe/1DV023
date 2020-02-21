@@ -5,10 +5,12 @@
 'use strict'
 
 const userRouter = require('express').Router()
+const userController = require('../../controllers/userController')
 
-userRouter.route('/register')
-  .get((req, res, next) => {
-    res.send('register!')
-  })
+userRouter.route('/')
+  .get(userController.index)
+
+// userRouter.route('/register')
+//   .get()
 
 module.exports = userRouter
