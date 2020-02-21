@@ -28,7 +28,8 @@ app.set('view engine', 'hbs')
 app.use(express.static(path.join(__dirname, 'public')))
 
 // Routes
-app.use(require(path.join(__dirname, 'routes', 'router.js')))
+// app.use(require(path.join(__dirname, 'routes', 'index.js')))
+require('./routes')(app)
 
 // Error Handling
 // Set the 404 error page
