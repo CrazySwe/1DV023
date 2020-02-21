@@ -5,7 +5,7 @@
 'use strict'
 
 const homeRouter = require('express').Router()
-const homeController = require('../../controllers/homeController')
+const homeController = require('../controllers/homeController')
 
 homeRouter.route('/')
   .get(homeController.index)

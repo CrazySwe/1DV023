@@ -25,13 +25,22 @@ app.engine('hbs', exphbs.express4({
 app.set('view engine', 'hbs')
 
 // Middleware
-app.use(express.static(path.join(__dirname, 'public')))
+app.use('/static', express.static(path.join(__dirname, 'public')))
 
 // Routes
-// app.use(require(path.join(__dirname, 'routes', 'index.js')))
 require('./routes')(app)
 
 // Error Handling
+app.get('/404', (req, res, next) => {
+  // This should trigger a status 404.
+  // Do i even need this?
+  next()
+})
+app.get('/500', (req, res, next) => {
+  // This should trigger a status 500.
+  next(new Error('500-error-test'))
+})
+
 // Set the 404 error page
 app.use((req, res, next) => {
   res.type('text/plain')
