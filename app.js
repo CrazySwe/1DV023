@@ -14,7 +14,6 @@ const path = require('path')
 const app = express()
 
 app.set('port', process.env.PORT || 8000)
-app.set('view engine', 'hbs')
 
 // View engine
 app.engine('hbs', exphbs.express4({
@@ -23,14 +22,17 @@ app.engine('hbs', exphbs.express4({
   layoutsDir: path.join(__dirname, 'views', 'layouts')
 
 }))
+app.set('view engine', 'hbs')
 
-app.set('views', path.join(__dirname, 'views'))
+// Middleware
+app.use(express.static(path.join(__dirname, 'public')))
 
-app.get('/', (req, res) => { res.render('index') })
+// Routes
+app.use(require(path.join(__dirname, 'routes', 'router.js')))
 
+// Error Handling
 // Set the 404 error page
-app.use((err, req, res, next) => {
-  console.error(err)
+app.use((req, res, next) => {
   res.type('text/plain')
   res.status(404)
   res.send('This is error 404 - Page not found.')
