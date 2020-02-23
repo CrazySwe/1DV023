@@ -43,9 +43,8 @@ app.get('/500', (req, res, next) => {
 
 // Set the 404 error page
 app.use((req, res, next) => {
-  res.type('text/plain')
   res.status(404)
-  res.send('This is error 404 - Page not found.')
+  res.render('errors/404')
 })
 
 // Set the 500 error page
@@ -53,7 +52,7 @@ app.use((err, req, res, next) => {
   console.error(err.stack)
   res.type('text/plain')
   res.status(500)
-  res.send('This is error 500 - Internal Server Error.')
+  res.send('Error 500 - Internal Server Error.')
 })
 
 // Start listening
