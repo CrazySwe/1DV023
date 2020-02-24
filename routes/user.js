@@ -10,7 +10,12 @@ const userController = require('../controllers/userController')
 userRouter.route('/')
   .get(userController.index)
 
+userRouter.route('/login')
+  .get(userController.login)
+  .post(userController.loginPost)
+
 // userRouter.route('/register')
-//   .get()
+//   .get(userController.register)
+//   .post(userController.registerPost)
 
 module.exports = userRouter

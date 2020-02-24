@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use('/static', express.static(path.join(__dirname, 'public')))
 
 // Routes
-require('./routes')(app)
+require('./routes/routes.js')(app)
 
 // Error Handling
 app.get('/404', (req, res, next) => {
