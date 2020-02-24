@@ -25,6 +25,7 @@ app.engine('hbs', exphbs.express4({
 app.set('view engine', 'hbs')
 
 // Middleware
+app.use(express.urlencoded({ extended: false }))
 app.use('/static', express.static(path.join(__dirname, 'public')))
 
 // Routes
