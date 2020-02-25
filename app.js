@@ -36,6 +36,7 @@ app.set('view engine', 'hbs')
 // Middleware
 app.use(express.urlencoded({ extended: false }))
 app.use('/static', express.static(path.join(__dirname, 'public')))
+
 // Session Middleware
 app.use(session({
   name: 'MySnippetPage',
@@ -46,10 +47,11 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24
   }
 }))
-// Flash-alert middleware
+
 app.use((req, res, next) => {
+  // session for templates usage
   res.locals.session = req.session
-  // flash messages - survives only a round trip
+  // Flash-alert middleware - survives only a round trip
   if (req.session.flash) {
     res.locals.flash = req.session.flash
     delete req.session.flash

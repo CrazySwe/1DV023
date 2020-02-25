@@ -16,8 +16,9 @@ userRouter.route('/login')
 
 userRouter.route('/logout')
   .get(userController.logout)
-// userRouter.route('/register')
-//   .get(userController.register)
-//   .post(userController.registerPost)
+
+userRouter.route('/register')
+  .get(userController.register)
+  .post(userController.registerPost)
 
 module.exports = userRouter

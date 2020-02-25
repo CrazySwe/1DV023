@@ -4,6 +4,8 @@
  */
 'use strict'
 
+const User = require('../models/user')
+
 const userController = {}
 
 userController.index = async (req, res) => {
@@ -11,8 +13,7 @@ userController.index = async (req, res) => {
 }
 
 userController.login = async (req, res) => {
-  // Check if already logged in?
-  if (req.session.username !== undefined) {
+  if (req.session.user !== undefined) {
     res.redirect('/')
   } else {
     res.render('user/login', { title: 'Login Page' })
@@ -21,20 +22,53 @@ userController.login = async (req, res) => {
 
 userController.loginPost = async (req, res) => {
   try {
-    // TODO Lets try to login
-    req.session.user = req.body.username
-    // req.session.password = req.body.password
+    const user = await User.findOne({ username: req.body.username })
+
+    if (!user || user.password !== req.body.password) {
+      req.session.flash = { type: 'danger', text: 'Wrong username or password.' }
+      return res.redirect('/user/login')
+    }
+
+    req.session.user = user.username
     req.session.flash = { type: 'success', text: 'You logged in! Welcome!' }
     res.redirect('/')
   } catch (error) {
     req.session.flash = { type: 'danger', text: error.message }
-    res.redirect('/')
+    res.redirect('/user/login')
   }
 }
 
 userController.logout = async (req, res) => {
   req.session.destroy()
   res.redirect('/')
+}
+
+userController.register = async (req, res) => {
+  res.render('user/register', { title: 'Register Form' })
+}
+
+userController.registerPost = async (req, res) => {
+  try {
+    if (req.body.password === req.body.passwordrepeat) {
+      const newUser = new User({
+        username: req.body.username,
+        password: req.body.password
+      })
+
+      await newUser.save()
+
+      req.session.flash = { type: 'success', text: 'Your account was created successfully.' }
+      res.redirect('/user/login')
+    } else {
+      req.session.flash = { type: 'danger', text: 'The passwords do not match.' }
+      res.redirect('/user/register')
+    }
+  } catch (error) {
+    console.error(error)
+    // TODO: Maybe clean up this error message more pretty?
+    req.session.flash = { type: 'danger', text: error.message }
+    res.redirect('/user/register')
+  }
 }
 
 module.exports = userController
