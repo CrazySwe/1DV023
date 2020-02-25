@@ -10,6 +10,7 @@
 const express = require('express')
 const exphbs = require('express-hbs')
 const path = require('path')
+const session = require('express-session')
 
 const app = express()
 
@@ -27,6 +28,16 @@ app.set('view engine', 'hbs')
 // Middleware
 app.use(express.urlencoded({ extended: false }))
 app.use('/static', express.static(path.join(__dirname, 'public')))
+// Session Middleware
+app.use(session({
+  name: 'MySnippetPage',
+  secret: 'zL7L787wKiH7Noxhu6kI',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24
+  }
+}))
 
 // Routes
 require('./routes/routes.js')(app)
