@@ -48,6 +48,7 @@ app.use(session({
 }))
 // Flash-alert middleware
 app.use((req, res, next) => {
+  res.locals.session = req.session
   // flash messages - survives only a round trip
   if (req.session.flash) {
     res.locals.flash = req.session.flash

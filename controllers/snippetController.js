@@ -8,7 +8,7 @@ const SnippetModel = require('../models/snippet')
 
 const snippetController = {}
 
-snippetController.create = (req, res) => {
+snippetController.create = async (req, res) => {
   res.render('snippet/create', { title: 'Create New Snippet' })
 }
 

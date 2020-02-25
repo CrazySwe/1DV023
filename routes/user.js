@@ -14,6 +14,8 @@ userRouter.route('/login')
   .get(userController.login)
   .post(userController.loginPost)
 
+userRouter.route('/logout')
+  .get(userController.logout)
 // userRouter.route('/register')
 //   .get(userController.register)
 //   .post(userController.registerPost)

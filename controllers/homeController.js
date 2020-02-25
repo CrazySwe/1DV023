@@ -8,11 +8,11 @@ const moment = require('moment')
 
 const homeController = {}
 
-homeController.index = (req, res) => {
+homeController.index = async (req, res) => {
   res.render('home/index', { title: 'MySnippetApplication' })
 }
 
-homeController.indexPost = (req, res) => {
+homeController.indexPost = async (req, res) => {
   const viewData = {
     name: req.body.name,
     dayName: moment().format('dddd')
