@@ -12,7 +12,15 @@ const exphbs = require('express-hbs')
 const path = require('path')
 const session = require('express-session')
 
+const mongoose = require('./configs/mongoose')
+
 const app = express()
+
+// Open the mongoose connection async
+mongoose.connect().catch(error => {
+  console.error(error)
+  process.exit(0)
+})
 
 app.set('port', process.env.PORT || 8000)
 
