@@ -56,7 +56,7 @@ app.get('/500', (req, res, next) => {
 // Set the 404 error page
 app.use((req, res, next) => {
   res.status(404)
-  res.render('errors/404')
+  res.render('errors/404', { layout: false })
 })
 
 // Set the 500 error page
