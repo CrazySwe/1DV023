@@ -2,6 +2,7 @@
   <ul>
     <li><a href="/">Home</a></li>
     {{#if session.user}}
+    <li><a href="/user">My Snippets</a></li>
     <li><a href="/snippet/create">Create a new snippet</a></li>
     <li><a href="/user/logout">Logout</a></li>
     {{else}}

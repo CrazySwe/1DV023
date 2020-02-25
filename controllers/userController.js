@@ -9,7 +9,11 @@ const User = require('../models/user')
 const userController = {}
 
 userController.index = async (req, res) => {
-  res.send('This is the index function of user. What should be we be able to do here?')
+  // Show my Snippets.
+  if (!req.session.user) {
+    return res.redirect('/user/login')
+  }
+  res.render('user/index', { title: 'My Snippets' })
 }
 
 userController.login = async (req, res) => {
