@@ -15,7 +15,7 @@ userController.login = (req, res) => {
   if (req.session.username !== undefined) {
     res.redirect('/')
   } else {
-    res.render('user/login', { header: 'Login Page' })
+    res.render('user/login', { title: 'Login Page' })
   }
 }
 
@@ -26,9 +26,11 @@ userController.loginPost = (req, res) => {
     req.session.password = req.body.password
     console.log(req.body.username)
     console.log(req.body.password)
+    req.session.flash = { type: 'success', text: 'You logged in! Welcome!' }
     res.redirect('/')
   } catch (error) {
-    // Show error message while logging in? "flash"?
+    req.session.flash = { type: 'danger', text: error.message }
+    res.redirect('/')
   }
 }
 

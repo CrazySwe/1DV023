@@ -9,7 +9,7 @@ const moment = require('moment')
 const homeController = {}
 
 homeController.index = (req, res) => {
-  res.render('home/index', { header: 'MySnippetApplication' })
+  res.render('home/index', { title: 'MySnippetApplication' })
 }
 
 homeController.indexPost = (req, res) => {
@@ -18,7 +18,7 @@ homeController.indexPost = (req, res) => {
     dayName: moment().format('dddd')
   }
 
-  res.render('home/index', { header: 'indexPost', viewData })
+  res.render('home/index', { title: 'indexPost', viewData })
 }
 
 module.exports = homeController
