@@ -9,24 +9,25 @@ const SnippetModel = require('../models/snippet')
 const snippetController = {}
 
 snippetController.create = async (req, res) => {
-  // only users
+  // TODO only users
   res.render('snippet/create', { title: 'Create New Snippet' })
 }
 
 snippetController.createPost = async (req, res) => {
-  // only users
+  // TODO only users
   try {
     const snippet = new SnippetModel({
-      title: 'testTitle',
-      author: 'username',
+      title: req.body.title,
+      author: req.session.user.id,
       body: req.body.snippetbody,
-      tags: ['test', 'what']
+      tags: req.body.tags.split(',').map(tag => tag.trim())
     })
 
     await snippet.save()
   } catch (error) {
     console.error(error)
   }
+  req.session.flash = { type: 'success', text: 'Snippet created successfully!' }
   res.redirect('/snippet/create')
 }
 

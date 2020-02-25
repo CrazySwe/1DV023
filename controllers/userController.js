@@ -29,8 +29,8 @@ userController.loginPost = async (req, res) => {
       return res.redirect('/user/login')
     }
 
-    req.session.user = user.username
-    req.session.flash = { type: 'success', text: 'You logged in! Welcome!' }
+    req.session.user = { username: user.username, id: user._id }
+    req.session.flash = { type: 'success', text: 'You are logged in! Welcome!' }
     res.redirect('/')
   } catch (error) {
     req.session.flash = { type: 'danger', text: error.message }
