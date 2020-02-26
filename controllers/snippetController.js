@@ -12,7 +12,13 @@ snippetController.create = async (req, res) => {
   if (!req.session.user) {
     return res.redirect(403, '/')
   }
-  res.render('snippet/create', { title: 'Create New Snippet' })
+  try {
+    res.render('snippet/create', { title: 'Create New Snippet' })
+  } catch (error) {
+    console.error(error)
+    req.session.flash = { type: 'danger', text: error.message }
+    res.redirect('/')
+  }
 }
 
 snippetController.createPost = async (req, res) => {
@@ -47,6 +53,7 @@ snippetController.read = async (req, res) => {
 }
 
 snippetController.edit = async (req, res) => {
+  // TODO: Only the right user can start editing.
   try {
     if (!req.session.user) {
       return res.redirect(403, '/')
@@ -61,20 +68,21 @@ snippetController.edit = async (req, res) => {
 }
 
 snippetController.updatePost = async (req, res) => {
+  // TODO: Check it's the right user updating.
   try {
     if (!req.session.user) {
       return res.redirect(403, '/')
     }
-    const result = Snippet.updateOne({ _id: req.body.id }, {
+    const result = await Snippet.updateOne({ _id: req.body.id }, {
       title: req.body.title,
       body: req.body.snippetbody,
       tags: req.body.tags.split(',').map(tag => tag.trim())
     }).exec()
 
     console.dir(result)
+
     req.session.flash = { type: 'success', text: 'Your snippet was updated successfully.' }
     res.redirect('/user')
-    // Update incoming snippet.
   } catch (error) {
     req.session.flash = { type: 'danger', text: error.message }
     res.redirect('/')
@@ -82,9 +90,16 @@ snippetController.updatePost = async (req, res) => {
 }
 
 snippetController.delete = async (req, res) => {
+  // TODO: Check its the right user that can delete.
   // delete the snippet and show flash message
   try {
+    if (!req.session.user) {
+      return res.redirect(403, '/')
+    }
+    await Snippet.deleteOne({ _id: req.params.id })
 
+    req.session.flash = { type: 'success', text: 'Snippet deleted successfully.' }
+    res.redirect('/user')
   } catch (error) {
     req.session.flash = { type: 'danger', text: error.message }
     res.redirect('/')
