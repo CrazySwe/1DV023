@@ -5,6 +5,7 @@
 'use strict'
 
 const User = require('../models/user')
+const Snippet = require('../models/snippet')
 
 const userController = {}
 
@@ -13,7 +14,13 @@ userController.index = async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/user/login')
   }
-  res.render('user/index', { title: 'My Snippets' })
+  try {
+    const snippets = await Snippet.find({ author: req.session.user.id }).sort([['creationDate', -1]]).exec()
+    res.render('user/index', { title: 'My Snippets', snippets })
+  } catch (error) {
+    req.session.flash = { type: 'danger', text: error.message }
+    res.render('user/index', { title: 'My Snippets' })
+  }
 }
 
 userController.login = async (req, res) => {

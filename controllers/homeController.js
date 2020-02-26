@@ -9,7 +9,7 @@ const Snippet = require('../models/snippet')
 const homeController = {}
 
 homeController.index = async (req, res) => {
-  const snippets = await Snippet.find().populate('author', 'username').sort('creationDate').limit(20).exec()
+  const snippets = await Snippet.find().populate('author', 'username').sort([['creationDate', -1]]).exec()
   res.render('home/index', { title: 'My Snippet Application', snippets })
 }
 

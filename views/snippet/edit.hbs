@@ -1,0 +1,13 @@
+{{#if snippetData}}
+<form action="/snippet/update" method="POST">
+    <label for="title"><b>Title</b></label>
+    <input type="text" name="title" value="{{snippetData.title}}">
+    <br>
+<textarea name="snippetbody">{{snippetData.body}}</textarea>
+<br>
+    <label for="tags"><b>tags (separate with commas)</b></label>
+    <input type="text" placeholder="tags" name="tags" value="{{snippetData.tags}}">
+    <br>
+<input type="submit" value="Update Snippet">
+</form>
+{{/if}}

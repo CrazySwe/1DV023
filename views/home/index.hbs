@@ -1,8 +1,6 @@
-<p>
-  Hello World!
-  This is the first page of the snippet application.
-</p>
-{{#if snippets}}
+<p>Welcome to My Snippet App!</p>
+<h2>Public Snippets</h2>
+{{#if snippets.length}}
   {{#each snippets}}
     <h2><a href="/snippet/{{this.id}}">{{this.title}}</a></h2>
     <p>{{this.creationDate}}</p>

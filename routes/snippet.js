@@ -14,9 +14,8 @@ snippetRouter.route('/create')
   .get(snippetController.create)
   .post(snippetController.createPost)
 
-snippetRouter
-  .get('/update/:id', snippetController.update)
-  .post('/update', snippetController.updatePost)
+snippetRouter.get('/edit/:id', snippetController.edit)
+snippetRouter.post('/update', snippetController.updatePost)
 
 snippetRouter.route('/delete/:id')
   .get(snippetController.delete)
