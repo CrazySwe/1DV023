@@ -53,14 +53,20 @@ snippetController.read = async (req, res) => {
 }
 
 snippetController.edit = async (req, res) => {
-  // TODO: Only the right user can start editing.
   try {
     if (!req.session.user) {
       return res.redirect(403, '/')
     }
+
     const snippetData = await Snippet.findById(req.params.id).populate('author', 'username')
-    snippetData.tags = snippetData.tags.reduce((acc, tag) => { return acc + ', ' + tag })
-    res.render('snippet/edit', { title: 'Edit Snippet', snippetData })
+
+    if (snippetData.author.id === req.session.user.id) {
+      snippetData.tags = snippetData.tags.reduce((acc, tag) => { return acc + ', ' + tag })
+      return res.render('snippet/edit', { title: 'Edit Snippet', snippetData })
+    } else {
+      req.session.flash = { type: 'danger', text: 'You don\'t own that snippet.' }
+      res.redirect('/user')
+    }
   } catch (error) {
     req.session.flash = { type: 'danger', text: error.message }
     res.redirect('/')
@@ -68,20 +74,22 @@ snippetController.edit = async (req, res) => {
 }
 
 snippetController.updatePost = async (req, res) => {
-  // TODO: Check it's the right user updating.
+  if (!req.session.user) {
+    return res.redirect(403, '/')
+  }
   try {
-    if (!req.session.user) {
-      return res.redirect(403, '/')
-    }
-    const result = await Snippet.updateOne({ _id: req.body.id }, {
+    const result = await Snippet.updateOne({ _id: req.body.id, author: req.session.user.id }, {
       title: req.body.title,
       body: req.body.snippetbody,
       tags: req.body.tags.split(',').map(tag => tag.trim())
     }).exec()
 
-    console.dir(result)
+    if (result.nModified === 1) {
+      req.session.flash = { type: 'success', text: 'Your snippet was updated successfully.' }
+    } else {
+      req.session.flash = { type: 'danger', text: 'Something went wrong updating the snippet.' }
+    }
 
-    req.session.flash = { type: 'success', text: 'Your snippet was updated successfully.' }
     res.redirect('/user')
   } catch (error) {
     req.session.flash = { type: 'danger', text: error.message }
@@ -90,15 +98,17 @@ snippetController.updatePost = async (req, res) => {
 }
 
 snippetController.delete = async (req, res) => {
-  // TODO: Check its the right user that can delete.
-  // delete the snippet and show flash message
+  if (!req.session.user) {
+    return res.redirect(403, '/')
+  }
   try {
-    if (!req.session.user) {
-      return res.redirect(403, '/')
-    }
-    await Snippet.deleteOne({ _id: req.params.id })
+    const result = await Snippet.deleteOne({ _id: req.params.id, author: req.session.user.id })
 
-    req.session.flash = { type: 'success', text: 'Snippet deleted successfully.' }
+    if (result.n === 1) {
+      req.session.flash = { type: 'success', text: 'Snippet deleted successfully.' }
+    } else {
+      req.session.flash = { type: 'danger', text: 'Something went wrong when deleting the snippet.' }
+    }
     res.redirect('/user')
   } catch (error) {
     req.session.flash = { type: 'danger', text: error.message }
