@@ -44,6 +44,8 @@ Mycket smådetaljer jag ville få till. Skulle även vilja fixa 403 error sidan 
 användarvänligt ut. 
 Skulle även vilja fixa till så man kan söka på snippets efter användare eller taggar.
 Men även pagination för snippets och snygga till UI mer, men fokusera mer på funktionerna denna gång innan tiden tog slut.
+Jag skulle även vilja ha fixat så att felmeddelanden skrevs mer användarvänligt.
+
 
 ### Extras
 
