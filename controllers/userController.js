@@ -9,6 +9,12 @@ const Snippet = require('../models/snippet')
 
 const userController = {}
 
+/**
+ * The start page for the logged in user.
+ *
+ * @param {object} req - Request object.
+ * @param {object} res - Response object.
+ */
 userController.index = async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/user/login')
@@ -22,6 +28,12 @@ userController.index = async (req, res) => {
   }
 }
 
+/**
+ * Presents the login page.
+ *
+ * @param {object} req - Request object.
+ * @param {object} res - Response object.
+ */
 userController.login = async (req, res) => {
   if (req.session.user !== undefined) {
     res.redirect('/')
@@ -30,6 +42,12 @@ userController.login = async (req, res) => {
   }
 }
 
+/**
+ * Handles the login of a user.
+ *
+ * @param {object} req - Request object.
+ * @param {object} res - Response object.
+ */
 userController.loginPost = async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username })
@@ -48,15 +66,34 @@ userController.loginPost = async (req, res) => {
   }
 }
 
+/**
+ * Handles the logout of a user.
+ *
+ * @param {object} req - Request object.
+ * @param {object} res - Response object.
+ */
 userController.logout = async (req, res) => {
   req.session.destroy()
+
   res.redirect('/')
 }
 
+/**
+ * Presents the registration page.
+ *
+ * @param {object} req - Request object.
+ * @param {object} res - Response object.
+ */
 userController.register = async (req, res) => {
   res.render('user/register', { title: 'Register Form' })
 }
 
+/**
+ * Registers a new user.
+ *
+ * @param {object} req - Request object.
+ * @param {object} res - Response object.
+ */
 userController.registerPost = async (req, res) => {
   try {
     if (req.body.password === req.body.passwordrepeat) {

@@ -8,6 +8,12 @@ const Snippet = require('../models/snippet')
 
 const snippetController = {}
 
+/**
+ * Handles the create snippet page.
+ *
+ * @param {object} req - Request object.
+ * @param {object} res - Response object.
+ */
 snippetController.create = async (req, res) => {
   if (!req.session.user) {
     return res.redirect(403, '/')
@@ -20,6 +26,12 @@ snippetController.create = async (req, res) => {
   }
 }
 
+/**
+ * Creates a snippet and saves it to database.
+ *
+ * @param {object} req - Request object.
+ * @param {object} res - Response object.
+ */
 snippetController.createPost = async (req, res) => {
   if (!req.session.user) {
     return res.redirect(403, '/')
@@ -41,6 +53,12 @@ snippetController.createPost = async (req, res) => {
   res.redirect('/snippet/create')
 }
 
+/**
+ * Gets a specific snippet and present it.
+ *
+ * @param {object} req - Request object.
+ * @param {object} res - Response object.
+ */
 snippetController.read = async (req, res) => {
   try {
     const snippetData = await Snippet.findById(req.params.id).populate('author', 'username')
@@ -51,6 +69,12 @@ snippetController.read = async (req, res) => {
   }
 }
 
+/**
+ * Presents an editing page for a specific snippet.
+ *
+ * @param {object} req - Request object.
+ * @param {object} res - Response object.
+ */
 snippetController.edit = async (req, res) => {
   try {
     if (!req.session.user) {
@@ -72,6 +96,12 @@ snippetController.edit = async (req, res) => {
   }
 }
 
+/**
+ * Updates a snippet in the database.
+ *
+ * @param {object} req - Request object.
+ * @param {object} res - Response object.
+ */
 snippetController.updatePost = async (req, res) => {
   if (!req.session.user) {
     return res.redirect(403, '/')
@@ -96,6 +126,12 @@ snippetController.updatePost = async (req, res) => {
   }
 }
 
+/**
+ * Deletes a specific snippet in the database.
+ *
+ * @param {object} req - Request object.
+ * @param {object} res - Response object.
+ */
 snippetController.delete = async (req, res) => {
   if (!req.session.user) {
     return res.redirect(403, '/')
