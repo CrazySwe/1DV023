@@ -7,9 +7,6 @@
 const snippetRouter = require('express').Router()
 const snippetController = require('../controllers/snippetController')
 
-snippetRouter.route('/:id')
-  .get(snippetController.read)
-
 snippetRouter.route('/create')
   .get(snippetController.create)
   .post(snippetController.createPost)
@@ -19,5 +16,8 @@ snippetRouter.post('/update', snippetController.updatePost)
 
 snippetRouter.route('/delete/:id')
   .get(snippetController.delete)
+
+snippetRouter.route('/:id')
+  .get(snippetController.read)
 
 module.exports = snippetRouter
