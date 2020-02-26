@@ -1,5 +1,6 @@
 /**
  * The configuration for a connection with mongoose to MongoDB.
+ * Taken from: https://github.com/1dv023/syllabus/blob/master/lectures/03/demo/configs/mongoose.js.
  *
  * @author Kevin Cederholm
  * @version 1.0.0
@@ -8,10 +9,11 @@
 
 const mongoose = require('mongoose')
 
+// This CONN_STRING is just for this assignment.
 const CONN_STRING = process.env.DB_CONNECTION_STRING
-'mongodb+srv://snippetappuser:hVU9a5csR3RweE7w@snippet-app-master-uzt4l.gcp.mongodb.net/test?retryWrites=true&w=majority'
 
 
+module.exports.connect = async () => {
   mongoose.connection.on('connected', () => console.log('Mongoose connection is open.'))
   mongoose.connection.on('error', (error) => console.error(`Mongoose connection error: ${error}`))
   mongoose.connection.on('disconnected', () => console.log('Mongoose connection is disconnected.'))

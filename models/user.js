@@ -1,5 +1,5 @@
 /**
- * Mongoose model for user.
+ * Mongoose model for a user.
  *
  * @author Kevin Cederholm
  * @version 1.0.0
@@ -8,7 +8,6 @@
 
 const mongoose = require('mongoose')
 
-// TODO: Fix validation && encrypting passwords? salt?
 const userSchema = new mongoose.Schema({
   username: {
     type: String,

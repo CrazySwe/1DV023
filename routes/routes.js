@@ -1,4 +1,7 @@
 /**
+ * Registers the different routers to
+ * handle different parts of the website.
+ *
  * @author Kevin Cederholm
  * @version 1.0.0
  */

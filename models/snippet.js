@@ -1,5 +1,5 @@
 /**
- * Mongoose model for Snippet.
+ * Mongoose model for a Snippet.
  *
  * @author Kevin Cederholm
  * @version 1.0.0
