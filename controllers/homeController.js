@@ -13,8 +13,4 @@ homeController.index = async (req, res) => {
   res.render('home/index', { title: 'My Snippet Application', snippets })
 }
 
-homeController.indexPost = async (req, res) => {
-  res.render('home/index', { title: 'index Post' })
-}
-
 module.exports = homeController

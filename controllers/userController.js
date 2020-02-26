@@ -10,7 +10,6 @@ const Snippet = require('../models/snippet')
 const userController = {}
 
 userController.index = async (req, res) => {
-  // Show my Snippets.
   if (!req.session.user) {
     return res.redirect('/user/login')
   }
@@ -75,8 +74,6 @@ userController.registerPost = async (req, res) => {
       res.redirect('/user/register')
     }
   } catch (error) {
-    console.error(error)
-    // TODO: Maybe clean up this error message more pretty?
     req.session.flash = { type: 'danger', text: error.message }
     res.redirect('/user/register')
   }

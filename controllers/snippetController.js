@@ -15,7 +15,6 @@ snippetController.create = async (req, res) => {
   try {
     res.render('snippet/create', { title: 'Create New Snippet' })
   } catch (error) {
-    console.error(error)
     req.session.flash = { type: 'danger', text: error.message }
     res.redirect('/')
   }
