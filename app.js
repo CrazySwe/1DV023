@@ -49,7 +49,7 @@ app.use(session({
 }))
 
 app.use((req, res, next) => {
-  // session for templates usage
+  // session for templates usage (dynamic menu)
   res.locals.session = req.session
   // Flash-alert middleware - survives only a round trip
   if (req.session.flash) {
@@ -59,7 +59,7 @@ app.use((req, res, next) => {
   next()
 })
 
-// Routes
+// Registers all the routes
 require('./routes/routes.js')(app)
 
 // Error Handling

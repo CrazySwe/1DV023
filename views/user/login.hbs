@@ -1,13 +1,14 @@
-<form action="/user/login" method="POST">
-
-  <div class="container">
-    <label for="username"><b>Username</b></label>
+<form class="pure-form pure-form-stacked" action="/user/login" method="POST">
+  <fieldset>
+  <legend>Login Form</legend>
+    <label for="username">Username:</label>
     <input type="text" placeholder="Enter Username" name="username" required>
 
-    <label for="password"><b>Password</b></label>
+    <label for="password">Password:</label>
     <input type="password" placeholder="Enter Password" name="password" required>
 
-    <button type="submit">Login</button>
-  </div>
+    <button class="pure-button pure-button-primary" type="submit">Login</button>
+
+  <fieldset>
 
 </form>
