@@ -11,10 +11,13 @@ const express = require('express')
 const exphbs = require('express-hbs')
 const path = require('path')
 const session = require('express-session')
+const helmet = require('helmet')
+const logger = require('morgan')
 
 const mongoose = require('./configs/mongoose')
 
 const app = express()
+app.use(helmet())
 
 // Open the mongoose connection async
 mongoose.connect().catch(error => {
@@ -34,6 +37,13 @@ app.engine('hbs', exphbs.express4({
 app.set('view engine', 'hbs')
 
 // Middleware
+app.use(logger('tiny'))
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    styleSrc: ["'self'", 'unpkg.com']
+  }
+}))
 app.use(express.urlencoded({ extended: false }))
 app.use('/static', express.static(path.join(__dirname, 'public')))
 
@@ -44,6 +54,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
+
     maxAge: 1000 * 60 * 60 * 24
   }
 }))
