@@ -1,5 +1,6 @@
 {{#if snippetData}}
 <form action="/snippet/update" method="POST">
+<input type="hidden" name="id" value="{{snippetData.id}}" />
     <label for="title"><b>Title</b></label>
     <input type="text" name="title" value="{{snippetData.title}}">
     <br>
