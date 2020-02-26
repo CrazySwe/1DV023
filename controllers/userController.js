@@ -17,7 +17,7 @@ const userController = {}
  */
 userController.index = async (req, res) => {
   if (!req.session.user) {
-    return res.redirect('/user/login')
+    return res.redirect(403, '/user/login')
   }
   try {
     const snippets = await Snippet.find({ author: req.session.user.id }).sort([['creationDate', -1]]).exec()
@@ -36,7 +36,7 @@ userController.index = async (req, res) => {
  */
 userController.login = async (req, res) => {
   if (req.session.user !== undefined) {
-    res.redirect('/')
+    res.redirect(403, '/')
   } else {
     res.render('user/login', { title: 'Login Page' })
   }

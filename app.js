@@ -57,8 +57,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-
-    maxAge: 1000 * 60 * 60 * 24
+    // secure: true, // Only in https
+    // httpOnly: true
+    maxAge: 1000 * 60 * 60 * 24,
+    sameSite: 'lax'
   }
 }))
 
@@ -103,7 +105,7 @@ app.use((err, req, res, next) => {
 
 // Start listening development
 app.listen(app.get('port'), () => {
-  console.log('Started on port ' + app.get('port') + ', press CTRL+C to terminate.')
+  console.log('HTTP Started on port ' + app.get('port') + ', press CTRL+C to terminate.')
 })
 
 // Production
@@ -111,5 +113,5 @@ https.createServer({
   key: fs.readFileSync('keys/server.key'),
   cert: fs.readFileSync('keys/server.cert')
 }, app).listen(8443, () => {
-  console.log('Started on port ' + 8443 + ', press CTRL+C to terminate.')
+  console.log('HTTPS Started on port ' + 8443 + ', press CTRL+C to terminate.')
 })
