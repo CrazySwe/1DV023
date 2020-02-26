@@ -14,6 +14,9 @@ const session = require('express-session')
 const helmet = require('helmet')
 const logger = require('morgan')
 
+const https = require('https')
+const fs = require('fs')
+
 const mongoose = require('./configs/mongoose')
 
 const app = express()
@@ -25,7 +28,7 @@ mongoose.connect().catch(error => {
   process.exit(0)
 })
 
-app.set('port', process.env.PORT || 8000)
+app.set('port', process.env.PORT || 8080)
 
 // View engine
 app.engine('hbs', exphbs.express4({
@@ -98,7 +101,15 @@ app.use((err, req, res, next) => {
   res.send('Error 500 - Internal Server Error.')
 })
 
-// Start listening
+// Start listening development
 app.listen(app.get('port'), () => {
   console.log('Started on port ' + app.get('port') + ', press CTRL+C to terminate.')
+})
+
+// Production
+https.createServer({
+  key: fs.readFileSync('keys/server.key'),
+  cert: fs.readFileSync('keys/server.cert')
+}, app).listen(8443, () => {
+  console.log('Started on port ' + 8443 + ', press CTRL+C to terminate.')
 })
