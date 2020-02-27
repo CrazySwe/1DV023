@@ -52,7 +52,7 @@ userController.loginPost = async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username })
 
-    if (!user || user.password !== req.body.password) {
+    if (!user || !user.isPasswordMatch(req.body.password)) {
       req.session.flash = { type: 'danger', text: 'Wrong username or password.' }
       return res.redirect('/user/login')
     }
