@@ -12,13 +12,24 @@ const bcrypt = require('bcryptjs')
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: [true, 'Username is required.'],
-    unique: true
+    required: [true, 'Username cannot be blank.'],
+    minlength: [2, 'Username must be at least 2 characters long.'],
+    maxlength: [25, 'Username must be less than 26 characters long.'],
+    lowercase: true,
+    trim: true,
+    unique: true,
+    validate: {
+      validator: async function (value) {
+        return !await this.model('User').findOne({ username: value }).exec()
+      },
+      message: 'That username is already taken.'
+    }
+
   },
   password: {
     type: String,
-    required: [true, 'Password is required.'],
-    minlength: 8
+    required: [true, 'Password cannot be blank.'],
+    minlength: [8, 'Password must be at least 8 characters long.']
   }
 })
 

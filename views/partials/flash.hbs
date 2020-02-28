@@ -1,5 +1,8 @@
 {{#if flash}}
-<div class="alert alert-{{flash.type}}">
-  {{flash.text}}
-</div>
+  {{#each flash}}
+      <div class="alert alert-{{type}}">
+        {{text}}
+      </div>
+
+ {{/each}}
 {{/if}}

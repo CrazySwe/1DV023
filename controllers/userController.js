@@ -50,7 +50,7 @@ userController.login = async (req, res) => {
  */
 userController.loginPost = async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.body.username })
+    const user = await User.findOne({ username: req.body.username }).exec()
 
     if (!user || !user.isPasswordMatch(req.body.password)) {
       req.session.flash = { type: 'danger', text: 'Wrong username or password.' }
@@ -101,7 +101,6 @@ userController.registerPost = async (req, res) => {
         username: req.body.username,
         password: req.body.password
       })
-
       await newUser.save()
 
       req.session.flash = { type: 'success', text: 'Your account was created successfully.' }
@@ -111,7 +110,14 @@ userController.registerPost = async (req, res) => {
       res.redirect('/user/register')
     }
   } catch (error) {
-    req.session.flash = { type: 'danger', text: error.message }
+    if (error.errors.username) {
+      req.session.flash.push({ type: 'danger', text: error.errors.username.message })
+    }
+    if (error.errors.password) {
+      req.session.flash.push({ type: 'danger', text: error.errors.password.message })
+    }
+    // Gotta fix this.
+    // req.session.flash.push({ type: 'danger', text: error.message })
     res.redirect('/user/register')
   }
 }
