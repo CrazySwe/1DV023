@@ -24,12 +24,15 @@ const userSchema = new mongoose.Schema({
       },
       message: 'That username is already taken.'
     }
-
   },
   password: {
     type: String,
     required: [true, 'Password cannot be blank.'],
-    minlength: [8, 'Password must be at least 8 characters long.']
+    minlength: [8, 'Password must be at least 8 characters long.'],
+    validate: {
+      validator: (v) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&åÅäÄöÖ]{8,}$/m.test(v),
+      message: 'The password must contain upper and lower case character and inlude at least one number and symbol.'
+    }
   }
 })
 
