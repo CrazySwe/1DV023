@@ -15,9 +15,6 @@ const snippetController = {}
  * @param {object} res - Response object.
  */
 snippetController.create = async (req, res) => {
-  if (!req.session.user) {
-    return res.redirect(403, '/')
-  }
   try {
     res.render('snippet/create', { title: 'Create New Snippet' })
   } catch (error) {
@@ -33,9 +30,6 @@ snippetController.create = async (req, res) => {
  * @param {object} res - Response object.
  */
 snippetController.createPost = async (req, res) => {
-  if (!req.session.user) {
-    return res.redirect(403, '/')
-  }
   try {
     const snippet = new Snippet({
       title: req.body.title,
@@ -77,10 +71,6 @@ snippetController.read = async (req, res) => {
  */
 snippetController.edit = async (req, res) => {
   try {
-    if (!req.session.user) {
-      return res.redirect(403, '/')
-    }
-
     const snippetData = await Snippet.findById(req.params.id).populate('author', 'username')
 
     if (snippetData.author.id === req.session.user.id) {
@@ -103,9 +93,6 @@ snippetController.edit = async (req, res) => {
  * @param {object} res - Response object.
  */
 snippetController.updatePost = async (req, res) => {
-  if (!req.session.user) {
-    return res.redirect(403, '/')
-  }
   try {
     const result = await Snippet.updateOne({ _id: req.body.id, author: req.session.user.id }, {
       title: req.body.title,
@@ -133,9 +120,6 @@ snippetController.updatePost = async (req, res) => {
  * @param {object} res - Response object.
  */
 snippetController.delete = async (req, res) => {
-  if (!req.session.user) {
-    return res.redirect(403, '/')
-  }
   try {
     const result = await Snippet.deleteOne({ _id: req.params.id, author: req.session.user.id })
 

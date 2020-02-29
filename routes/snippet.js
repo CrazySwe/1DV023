@@ -8,27 +8,28 @@
 
 const snippetRouter = require('express').Router()
 const snippetController = require('../controllers/snippetController')
+const isAuthenticated = require('./auth')
 
 /**
  * GET "/snippet/create".
  * POST "/snippet/create".
  */
 snippetRouter.route('/create')
-  .get(snippetController.create)
-  .post(snippetController.createPost)
+  .get(isAuthenticated, snippetController.create)
+  .post(isAuthenticated, snippetController.createPost)
 
 /**
  * GET "/snippet/edit/:id".
  * POST "/snippet/update".
  */
-snippetRouter.get('/edit/:id', snippetController.edit)
-snippetRouter.post('/update', snippetController.updatePost)
+snippetRouter.get('/edit/:id', isAuthenticated, snippetController.edit)
+snippetRouter.post('/update', isAuthenticated, snippetController.updatePost)
 
 /**
  * GET "/snippet/delete/:id".
  */
 snippetRouter.route('/delete/:id')
-  .get(snippetController.delete)
+  .get(isAuthenticated, snippetController.delete)
 
 /**
  * GET "/snippet/:id".

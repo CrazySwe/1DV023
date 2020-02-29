@@ -13,6 +13,7 @@ const path = require('path')
 const session = require('express-session')
 const helmet = require('helmet')
 const logger = require('morgan')
+const createError = require('http-errors')
 
 const https = require('https')
 const fs = require('fs')
@@ -78,30 +79,21 @@ app.use((req, res, next) => {
 
 // Registers all the routes
 require('./routes/routes.js')(app)
-
-// Error Handling
-app.get('/404', (req, res, next) => {
-  // This should trigger a status 404.
-  // Do i even need this?
-  next()
-})
-app.get('/500', (req, res, next) => {
-  // This should trigger a status 500.
-  next(new Error('500-error-test'))
-})
-
-// Set the 404 error page
-app.use((req, res, next) => {
-  res.status(404)
-  res.render('errors/404', { layout: false })
-})
+// And 404 if route is not found.
+app.use('*', (req, res, next) => next(createError(404, 'Page not found.')))
 
 // Set the 500 error page
 app.use((err, req, res, next) => {
-  console.error(err.stack)
+  switch (err.status) {
+    case 404:
+      return res.status(404).send('404: ' + err.message)
+
+    case 403:
+      return res.status(403).send('403: ' + err.message)
+  }
+
   res.type('text/plain')
-  res.status(500)
-  res.send('Error 500 - Internal Server Error.')
+  res.status(500).send('Error 500 - Internal Server Error.')
 })
 
 // Start listening development

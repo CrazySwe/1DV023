@@ -8,12 +8,13 @@
 
 const userRouter = require('express').Router()
 const userController = require('../controllers/userController')
+const isAuthenticated = require('./auth')
 
 /**
  * GET "/user/".
  */
 userRouter.route('/')
-  .get(userController.index)
+  .get(isAuthenticated, userController.index)
 
 /**
  * GET "/user/login".
@@ -27,7 +28,7 @@ userRouter.route('/login')
  * GET "/user/logout".
  */
 userRouter.route('/logout')
-  .get(userController.logout)
+  .get(isAuthenticated, userController.logout)
 
 /**
  * GET "/user/register".

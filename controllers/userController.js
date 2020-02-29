@@ -16,9 +16,6 @@ const userController = {}
  * @param {object} res - Response object.
  */
 userController.index = async (req, res) => {
-  if (!req.session.user) {
-    return res.redirect(403, '/user/login')
-  }
   try {
     const snippets = await Snippet.find({ author: req.session.user.id }).sort([['creationDate', -1]]).exec()
     res.render('user/index', { title: 'My Snippets', snippets })
@@ -35,11 +32,7 @@ userController.index = async (req, res) => {
  * @param {object} res - Response object.
  */
 userController.login = async (req, res) => {
-  if (req.session.user !== undefined) {
-    res.redirect(403, '/')
-  } else {
-    res.render('user/login', { title: 'Login Page' })
-  }
+  res.render('user/login', { title: 'Login Page' })
 }
 
 /**
@@ -74,7 +67,6 @@ userController.loginPost = async (req, res) => {
  */
 userController.logout = async (req, res) => {
   req.session.destroy()
-
   res.redirect('/')
 }
 
