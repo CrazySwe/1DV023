@@ -5,6 +5,7 @@
 'use strict'
 
 const Snippet = require('../models/snippet')
+const moment = require('moment')
 
 const snippetController = {}
 
@@ -55,7 +56,14 @@ snippetController.createPost = async (req, res) => {
  */
 snippetController.read = async (req, res) => {
   try {
-    const snippetData = await Snippet.findById(req.params.id).populate('author', 'username')
+    const data = await Snippet.findById(req.params.id).populate('author', 'username')
+    const snippetData = {
+      title: data.title,
+      author: data.author.username.charAt(0).toUpperCase() + data.author.username.substring(1),
+      creationDate: moment(data.creationDate).format('LLL'),
+      tags: data.tags,
+      body: data.body
+    }
     res.render('snippet/snippet', { title: snippetData.title, snippetData })
   } catch (error) {
     req.session.flash.push({ type: 'danger', text: error.message })

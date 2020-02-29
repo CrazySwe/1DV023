@@ -7,6 +7,7 @@
 'use strict'
 
 const Snippet = require('../models/snippet')
+const moment = require('moment')
 
 const homeController = {}
 
@@ -17,7 +18,15 @@ const homeController = {}
  * @param {object} res - Response object.
  */
 homeController.index = async (req, res) => {
-  const snippets = await Snippet.find().populate('author', 'username').sort([['creationDate', -1]]).exec()
+  const data = await Snippet.find().populate('author', 'username').sort([['creationDate', -1]]).exec()
+  const snippets = data.map(model => {
+    return {
+      title: model.title,
+      id: model.id,
+      author: model.author.username,
+      creationDate: moment(model.creationDate).format('LLL')
+    }
+  })
   res.render('home/index', { title: 'My Snippet Application', snippets })
 }
 
