@@ -28,5 +28,8 @@
   },
   "eslintConfig": {
     "extends": "@lnu"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0"
   }
 }

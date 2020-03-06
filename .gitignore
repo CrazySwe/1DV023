@@ -1,6 +1,9 @@
 
-# Created by https://www.gitignore.io/api/windows,node,visualstudiocode
-# Edit at https://www.gitignore.io/?templates=windows,node,visualstudiocode
+# Created by https://www.gitignore.io/api/windows,node,visualstudiocode,dotenv
+# Edit at https://www.gitignore.io/?templates=windows,node,visualstudiocode,dotenv
+
+### dotenv ###
+.env
 
 ### Node ###
 # Logs
@@ -68,7 +71,6 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
 .env.test
 
 # parcel-bundler cache (https://parceljs.org/)
@@ -145,4 +147,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.gitignore.io/api/windows,node,visualstudiocode
+# End of https://www.gitignore.io/api/windows,node,visualstudiocode,dotenv

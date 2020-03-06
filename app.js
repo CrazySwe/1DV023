@@ -1,6 +1,6 @@
 /**
- * Exam Assignment 2 in course 1DV023.
- * Code Snippet Application.
+ * Exam Assignment 3 in course 1DV023.
+ * Real time issue application.
  *
  * @author Kevin Cederholm
  * @version 1.0.0
