@@ -8,4 +8,8 @@
 
 const usersController = {}
 
+usersController.auth = async (req, res) => {
+  res.send('Authcontroller.')
+}
+
 module.exports = usersController

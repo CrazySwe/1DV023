@@ -19,6 +19,9 @@ app.set('port', process.env.PORT || 8080)
 // Register Routes
 require('./routes/routes.js')(app)
 
+// Handle 404?
+app.use('*', (req, res, next) => { res.status(404).send('Not found.') })
+
 // Start the web server.
 app.listen(app.get('port'), app.get('host'), () => {
   console.log('Server started on http://' + app.get('host') + ':' + app.get('port'))
