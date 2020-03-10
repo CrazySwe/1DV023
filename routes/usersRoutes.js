@@ -9,7 +9,9 @@
 const usersRouter = require('express').Router()
 const usersController = require('../controllers/usersController')
 
-usersRouter.route('/auth')
-  .get(usersController.auth)
+usersRouter.route('/auth/gitlab')
+  .get(usersController.gitlabAuth)
 
+usersRouter.route('/auth/gitlab/callback')
+  .get(usersController.gitlabCallback)
 module.exports = usersRouter
