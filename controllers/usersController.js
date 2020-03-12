@@ -13,9 +13,9 @@ const usersController = {}
 usersController.gitlabAuth = async (req, res) => {
   // Fix temporary state to save in session.
   const state = 'tempstate'
-  res.redirect(`https://${process.env.GL_URI}/oauth/authorize?` +
-    `client_id=${process.env.GL_APPID}&` +
-    `redirect_uri=${process.env.GL_REDIRECT}&` +
+  res.redirect(`https://${process.env.GITLAB_URI}/oauth/authorize?` +
+    `client_id=${process.env.GITLAB_APPID}&` +
+    `redirect_uri=${process.env.GITLAB_REDIRECT}&` +
     'response_type=code&' +
     `state=${state}&` +
     'scope=api'
@@ -23,23 +23,24 @@ usersController.gitlabAuth = async (req, res) => {
 }
 usersController.gitlabCallback = async (req, res) => {
   // Check temporary session.state towards req.query.state
-  console.dir(req.query)
+  // console.dir(req.query)
   try {
     const result = await axios({
       method: 'POST',
-      url: `https://${process.env.GL_URI}/oauth/token?` +
-      `client_id=${process.env.GL_APPID}&` +
-      `client_secret=${process.env.GL_SECRET}&` +
+      url: `https://${process.env.GITLAB_HOST}/oauth/token?` +
+      `client_id=${process.env.GITLAB_APPID}&` +
+      `client_secret=${process.env.GITLAB_SECRET}&` +
       `code=${req.query.code}&` +
       'grant_type=authorization_code&' +
-      `redirect_uri=${process.env.GL_REDIRECT}`
+      `redirect_uri=${process.env.GITLAB_REDIRECT}`
     })
+    // set session with access token etc..
     console.dir(result.data)
   } catch (error) {
-    console.dir(error)
+    // Clean up error more?
     return res.status(500).send('Something went wrong in getting access token...')
   }
-  res.status(200).send('it worked? Success gitlabCallback')
+  res.redirect(200, '/')
 }
 
 module.exports = usersController
