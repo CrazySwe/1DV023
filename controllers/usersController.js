@@ -13,7 +13,7 @@ const usersController = {}
 usersController.gitlabAuth = async (req, res) => {
   // Fix temporary state to save in session.
   const state = 'tempstate'
-  res.redirect(`https://${process.env.GITLAB_URI}/oauth/authorize?` +
+  res.redirect(`https://${process.env.GITLAB_HOST}/oauth/authorize?` +
     `client_id=${process.env.GITLAB_APPID}&` +
     `redirect_uri=${process.env.GITLAB_REDIRECT}&` +
     'response_type=code&' +
@@ -23,7 +23,7 @@ usersController.gitlabAuth = async (req, res) => {
 }
 usersController.gitlabCallback = async (req, res) => {
   // Check temporary session.state towards req.query.state
-  // console.dir(req.query)
+  console.dir(req.query)
   try {
     const result = await axios({
       method: 'POST',
@@ -36,11 +36,12 @@ usersController.gitlabCallback = async (req, res) => {
     })
     // set session with access token etc..
     console.dir(result.data)
+    req.session.auth = result.data
   } catch (error) {
     // Clean up error more?
     return res.status(500).send('Something went wrong in getting access token...')
   }
-  res.redirect(200, '/')
+  res.redirect('/')
 }
 
 module.exports = usersController

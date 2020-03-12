@@ -9,7 +9,7 @@
 const homeController = {}
 
 homeController.index = async (req, res) => {
-  res.status(200).send('This is the frontpage.')
+  res.render('front')
 }
 
 module.exports = homeController
