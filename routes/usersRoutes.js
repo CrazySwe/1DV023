@@ -14,4 +14,5 @@ usersRouter.route('/auth/gitlab')
 
 usersRouter.route('/auth/gitlab/callback')
   .get(usersController.gitlabCallback)
+
 module.exports = usersRouter

@@ -1,1 +1,7 @@
 <p>This is the dashboard.</p>
+{{#each issues}}
+<h4>{{owner.name}}</h4>
+<p>{{id}}</p>
+<p><a href="{{web_url}}" target="_blank">{{name}}</a></p>
+
+{{/each}}

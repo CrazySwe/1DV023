@@ -6,10 +6,19 @@
  */
 'use strict'
 
+const getIssues = require('../models/issues')
+
 const homeController = {}
 
 homeController.index = async (req, res) => {
   res.render('front')
+}
+
+homeController.dashboard = async (req, res) => {
+  // Show projects/repos to choose from?
+  const issues = await getIssues(req.session.auth.access_token)
+  console.dir(issues)
+  res.render('dashboard', { issues })
 }
 
 module.exports = homeController
