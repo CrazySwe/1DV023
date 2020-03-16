@@ -1,5 +1,5 @@
 /**
- * Exam Assignment 3 in course 1DV023.
+ * Auth Middleware to return unauthorized to starting front page.
  *
  * @author Kevin Cederholm
  * @version 1.0.0

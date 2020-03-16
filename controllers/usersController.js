@@ -41,7 +41,7 @@ usersController.gitlabCallback = async (req, res) => {
     // Clean up error more?
     return res.status(500).send('Something went wrong in getting access token...')
   }
-  res.redirect('/dashboard')
+  res.redirect('/projects')
 }
 
 module.exports = usersController

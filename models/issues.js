@@ -7,7 +7,7 @@
 'use strict'
 const Gitlab = require('gitlab').Gitlab
 
-const issues = async function (oaToken) {
+const issues = async function (oaToken, id) {
   try {
     const api = new Gitlab({
       host: 'https://' + process.env.GITLAB_HOST,
@@ -15,9 +15,7 @@ const issues = async function (oaToken) {
     })
 
     // Fix this maybe?
-    return await api.Projects.all({
-      membership: true
-    })
+    return await api.Issues.all(id)
   } catch (error) {
     // CLEAN UP ERRORS?!
     console.dir(error)

@@ -7,6 +7,7 @@
 'use strict'
 
 const getIssues = require('../models/issues')
+const getProjects = require('../models/projects')
 
 const homeController = {}
 
@@ -14,10 +15,18 @@ homeController.index = async (req, res) => {
   res.render('front')
 }
 
-homeController.dashboard = async (req, res) => {
+homeController.projects = async (req, res) => {
   // Show projects/repos to choose from?
-  const issues = await getIssues(req.session.auth.access_token)
-  console.dir(issues)
+
+  const projects = await getProjects(req.session.auth.access_token)
+  console.dir(projects)
+  res.render('projects', { projects })
+}
+
+homeController.dashboard = async (req, res) => {
+  console.dir(req.params.id)
+  const issues = await getIssues(req.session.auth.access_token, req.params.id)
+  // console.dir(issues)
   res.render('dashboard', { issues })
 }
 

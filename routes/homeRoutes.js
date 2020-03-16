@@ -13,7 +13,10 @@ const isAuth = require('../middleware/auth')
 homeRouter.route('/')
   .get(homeController.index)
 
-homeRouter.route('/dashboard')
+homeRouter.route('/projects')
+  .get(isAuth, homeController.projects)
+
+homeRouter.route('/dashboard/:id')
   .get(isAuth, homeController.dashboard)
 
 module.exports = homeRouter
