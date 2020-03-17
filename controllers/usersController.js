@@ -23,7 +23,7 @@ usersController.gitlabAuth = async (req, res) => {
 }
 usersController.gitlabCallback = async (req, res) => {
   // Check temporary session.state towards req.query.state
-  console.dir(req.query)
+  // console.dir(req.query)
   try {
     const result = await axios({
       method: 'POST',
@@ -35,7 +35,7 @@ usersController.gitlabCallback = async (req, res) => {
       `redirect_uri=${process.env.GITLAB_REDIRECT}`
     })
     // set session with access token etc..
-    console.dir(result.data)
+    // console.dir(result.data)
     req.session.auth = result.data
   } catch (error) {
     // Clean up error more?

@@ -24,9 +24,9 @@ homeController.projects = async (req, res) => {
 }
 
 homeController.dashboard = async (req, res) => {
-  console.dir(req.params.id)
+  // console.dir(req.params.id)
   const issues = await getIssues(req.session.auth.access_token, req.params.id)
-  console.dir(issues)
+  // console.dir(issues)
   res.render('dashboard', { issues })
 }
 

@@ -49,6 +49,19 @@ require('./routes/routes.js')(app)
 app.use('*', (req, res, next) => { res.status(404).send('Not found.') })
 
 // Start the web server.
-app.listen(app.get('port'), app.get('host'), () => {
+const server = require('http').createServer(app)
+
+server.listen(app.get('port'), app.get('host'), () => {
   console.log('Server started on http://' + app.get('host') + ':' + app.get('port'))
+})
+
+// Websocket.
+const io = require('socket.io')(server, {
+  // Socket.io settings.
+})
+
+io.on('connection', function (socket) {
+  console.dir('Client connected on websocket ID: ' + socket.id + ' session?:' + socket.handshake.headers.cookie)
+
+  // console.dir(socket.handshake.cookie)
 })

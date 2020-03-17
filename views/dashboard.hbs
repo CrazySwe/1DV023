@@ -1,16 +1,37 @@
 <h2>Dashboard Real-Time Issues</h2>
 
+<script src='/socket.io/socket.io.js'></script> 
+<script>
+/**
+ * Issue Notifier.
+ *
+ * @author Kevin Cederholm
+ * @version 1.0.0
+ */
+
+'use strict'
+
+const socket = io()
+
+socket.on('welcome', function (data) {
+  console.dir(data)
+})
+</script>
 
 <div class="row">
-  <div class="column">
+  <div class="column" id="col_issues">
     <h3>All Issues</h3>
+    <div id="issues">
     {{#each issues}}
     {{>issue}}
     {{/each}}
+    </div>
   </div>
-  <div class="column">
+  <div class="column" id="col_notifications">
     <h3>Notifications</h3>
-
+      <div id="notifications">
+        
+      </div>
   </div>
 </div>
 
