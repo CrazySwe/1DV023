@@ -1,14 +1,16 @@
-<p>This is the dashboard for specific project.</p>
-{{#each issues}}
+<h2>Dashboard Real-Time Issues</h2>
 
-<p>
-  {{id}} 
-  {{title}}
-  {{description}}
-  {{author.id}}
-  {{author.username}}
-  {{web_url}}
 
-</p>
+<div class="row">
+  <div class="column">
+    <h3>All Issues</h3>
+    {{#each issues}}
+    {{>issue}}
+    {{/each}}
+  </div>
+  <div class="column">
+    <h3>Notifications</h3>
 
-{{/each}}
+  </div>
+</div>
+

@@ -27,7 +27,7 @@ app.engine('hbs', exphbs.express4({
 app.set('view engine', 'hbs')
 
 // Express settings and built-in middleware
-// app.use('/static', express.static(path.join(__dirname, 'public')))
+app.use('/static', express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: false }))
 
 // Handle session

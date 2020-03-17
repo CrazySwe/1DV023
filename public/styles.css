@@ -1,0 +1,24 @@
+* {
+  margin:0;
+  padding:0;
+}
+.column  {
+  float:left;
+  width:50%;
+}
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.issue {
+  background-color: lightblue;
+  width:90%;
+  margin:0 auto;
+}
+
+.container {
+  margin: 10px 0px;
+  padding:2px 16px;
+}
