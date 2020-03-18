@@ -13,9 +13,17 @@
 
 const socket = io()
 
-socket.on('welcome', function (data) {
-  console.dir(data)
-})
+function debugData(data) {
+  console.log(data)
+   document.getElementById('notifications').innerText += data.object_kind + '<br>'
+}
+
+socket.on('issue_comment', debugData)
+socket.on('issue_opened', debugData)
+socket.on('issue_closed', debugData)
+socket.on('issue_reopen', debugData)
+socket.on('issue_update', debugData)
+
 </script>
 
 <div class="row">

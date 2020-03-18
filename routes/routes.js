@@ -9,4 +9,5 @@
 module.exports = (app) => {
   app.use('/', require('./homeRoutes'))
   app.use('/users', require('./usersRoutes'))
+  app.use('/webhook', require('./webhookRoutes'))
 }

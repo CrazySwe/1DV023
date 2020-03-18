@@ -28,10 +28,11 @@ app.set('view engine', 'hbs')
 
 // Express settings and built-in middleware
 app.use('/static', express.static(path.join(__dirname, 'public')))
+app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 // Handle session
-app.use(session({
+const sessionMiddleware = session({
   name: 'IssueLister',
   secret: 'lmIKEWU5PUH4*5rH2O7vvTAcGVc1CCjpEq$2',
   resave: false,
@@ -40,7 +41,8 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24,
     sameSite: 'lax'
   }
-}))
+})
+app.use(sessionMiddleware)
 
 // Register Routes
 require('./routes/routes.js')(app)
@@ -57,11 +59,20 @@ server.listen(app.get('port'), app.get('host'), () => {
 
 // Websocket.
 const io = require('socket.io')(server, {
-  // Socket.io settings.
+  // Socket.io settings?
 })
 
-io.on('connection', function (socket) {
-  console.dir('Client connected on websocket ID: ' + socket.id + ' session?:' + socket.handshake.headers.cookie)
+io.use(function (socket, next) {
+  sessionMiddleware(socket.request, socket.request.res, next)
+})
 
-  // console.dir(socket.handshake.cookie)
+app.set('socketio', io)
+// Middleware saving the socket
+io.on('connection', function (socket) {
+  // console.dir('Client connected on websocket ID: ' + socket.id)
+  // console.log('Session id:', socket.request.session)
+  // join the project room.
+  socket.join(socket.request.session.chosenproject)
+  // socket.request.session.socketio = socket.id
+  socket.request.session.save()
 })
