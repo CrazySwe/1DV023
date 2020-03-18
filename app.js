@@ -69,10 +69,6 @@ io.use(function (socket, next) {
 app.set('socketio', io)
 // Middleware saving the socket
 io.on('connection', function (socket) {
-  // console.dir('Client connected on websocket ID: ' + socket.id)
-  // console.log('Session id:', socket.request.session)
   // join the project room.
   socket.join(socket.request.session.chosenproject)
-  // socket.request.session.socketio = socket.id
-  socket.request.session.save()
 })
