@@ -1,5 +1,5 @@
 /**
- * Exam Assignment 3 in course 1DV023.
+ * Routes for users.
  *
  * @author Kevin Cederholm
  * @version 1.0.0
@@ -9,9 +9,15 @@
 const usersRouter = require('express').Router()
 const usersController = require('../controllers/usersController')
 
+/**
+ * GET users/auth/gitlab/.
+ */
 usersRouter.route('/auth/gitlab')
   .get(usersController.gitlabAuth)
 
+/**
+ * GET users/auth/gitlab/callback.
+ */
 usersRouter.route('/auth/gitlab/callback')
   .get(usersController.gitlabCallback)
 

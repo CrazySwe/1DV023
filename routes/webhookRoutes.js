@@ -9,6 +9,9 @@
 const webhookRouter = require('express').Router()
 const webhookController = require('../controllers/webhookController')
 
+/**
+ * POST /webhook/.
+ */
 webhookRouter.route('/')
   .post(webhookController.indexPost)
 

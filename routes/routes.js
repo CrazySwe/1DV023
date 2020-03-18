@@ -1,5 +1,5 @@
 /**
- * Exam Assignment 3 in course 1DV023.
+ * Register the routes.
  *
  * @author Kevin Cederholm
  * @version 1.0.0

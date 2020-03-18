@@ -1,5 +1,5 @@
 /**
- * Exam Assignment 3 in course 1DV023.
+ * UsersController for handling authentication.
  *
  * @author Kevin Cederholm
  * @version 1.0.0
@@ -21,9 +21,9 @@ usersController.gitlabAuth = async (req, res) => {
     'scope=api'
   )
 }
+
 usersController.gitlabCallback = async (req, res) => {
   // Check temporary session.state towards req.query.state
-  // console.dir(req.query)
   try {
     const result = await axios({
       method: 'POST',
@@ -34,11 +34,8 @@ usersController.gitlabCallback = async (req, res) => {
       'grant_type=authorization_code&' +
       `redirect_uri=${process.env.GITLAB_REDIRECT}`
     })
-    // set session with access token etc..
-    // console.dir(result.data)
     req.session.auth = result.data
   } catch (error) {
-    // Clean up error more?
     return res.status(500).send('Something went wrong in getting access token...')
   }
   res.redirect('/projects')

@@ -40,14 +40,6 @@ webhookController.indexPost = function (req, res) {
     }
   }
   ioserver.to(projectId).emit(evt, req.body)
-
-  console.dir('Issue: ' + req.body.issue)
-  console.dir('Object kind: ' + req.body.object_kind)
-
-  // console.dir(ioserver.sockets)
-  // Who to send to? check who has currproject?
-  // console.dir(req.app.get('socketio'))
-  // console.log(req.body)
   res.sendStatus(200)
 }
 

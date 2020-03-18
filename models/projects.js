@@ -1,5 +1,5 @@
 /**
- * Exam Assignment 3 in course 1DV023.
+ * Fetching the projects from the gitlab instance.
  *
  * @author Kevin Cederholm
  * @version 1.0.0
@@ -13,13 +13,10 @@ const projects = async function (oaToken) {
       host: 'https://' + process.env.GITLAB_HOST,
       oauthToken: oaToken
     })
-
-    // Fix this maybe?
     return await api.Projects.all({
       membership: true
     })
   } catch (error) {
-    // CLEAN UP ERRORS?!
     console.dir(error)
   }
 }

@@ -1,5 +1,5 @@
 /**
- * Exam Assignment 3 in course 1DV023.
+ * Fetching the issues from the gitlab instance.
  *
  * @author Kevin Cederholm
  * @version 1.0.0
@@ -13,11 +13,8 @@ const issues = async function (oaToken, pId) {
       host: 'https://' + process.env.GITLAB_HOST,
       oauthToken: oaToken
     })
-
-    // Fix this maybe?
     return await api.Issues.all({ projectId: pId })
   } catch (error) {
-    // CLEAN UP ERRORS?!
     console.dir(error)
   }
 }
