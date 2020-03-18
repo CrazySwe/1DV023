@@ -1,0 +1,6 @@
+#!/bin/bash
+
+git --work-tree=/var/www/issuelister --git-dir=/var/repo/site.git checkout -f
+cd /var/www/issuelister
+npm install --production
+pm2 start app.js --name=issuelister
