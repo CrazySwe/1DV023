@@ -12,17 +12,14 @@ const Gitlab = require('gitlab').Gitlab
  *
  * @param {string} oaToken - The Oauth token string.
  * @param {string} pId  - The project ID.
+ * @throws {Error} - Error if fetching issues goes wrong.
  */
 const issues = async function (oaToken, pId) {
-  try {
-    const api = new Gitlab({
-      host: 'https://' + process.env.GITLAB_HOST,
-      oauthToken: oaToken
-    })
-    return await api.Issues.all({ projectId: pId })
-  } catch (error) {
-    console.dir(error)
-  }
+  const api = new Gitlab({
+    host: 'https://' + process.env.GITLAB_HOST,
+    oauthToken: oaToken
+  })
+  return api.Issues.all({ projectId: pId })
 }
 
 module.exports = issues

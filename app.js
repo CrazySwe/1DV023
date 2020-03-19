@@ -59,6 +59,17 @@ require('./routes/routes.js')(app)
 // Handle 404?
 app.use('*', (req, res, next) => { res.status(404).send('Not found.') })
 
+// Last resort error
+
+app.use((err, req, res, next) => {
+  console.dir(err)
+  switch (err.status) {
+    case 404:
+      return res.status(404).send('404')
+  }
+  res.type('text/plain')
+  res.status(500).send('Error 500 - Internal Server Error.')
+})
 // Start the web server.
 const server = require('http').createServer(app)
 
