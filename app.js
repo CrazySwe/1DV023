@@ -29,6 +29,13 @@ app.set('view engine', 'hbs')
 
 // Express settings and middleware
 app.use(helmet())
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    styleSrc: ["'self'"],
+    scriptSrc: ["'self'", "'unsafe-inline'"]
+  }
+}))
 app.use('/static', express.static(path.join(__dirname, 'public')))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
