@@ -68,6 +68,8 @@ Detta påverkar express genom att använda cache funktioner för view templates 
 - socket.io
   socket.io är ett package som använder websocket för att skapa en realtids connection mellan klient och server.
   Den går över till secure websocket (wss) när det finns tillgängligt. Just nu är det auto-discovery men nginx tvingar wss.
+- helmet
+  Satte upp helmet så den åtminstone kör med grundläggande säkerhet för HTTP headers.
 
 ### Overall Reflection
 

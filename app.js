@@ -11,6 +11,7 @@ const path = require('path')
 const express = require('express')
 const exphbs = require('express-hbs')
 const session = require('express-session')
+const helmet = require('helmet')
 const app = express()
 
 require('dotenv').config()
@@ -26,7 +27,8 @@ app.engine('hbs', exphbs.express4({
 }))
 app.set('view engine', 'hbs')
 
-// Express settings and built-in middleware
+// Express settings and middleware
+app.use(helmet())
 app.use('/static', express.static(path.join(__dirname, 'public')))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))

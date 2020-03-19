@@ -1,6 +1,8 @@
 <p>This is the projects.</p>
 {{#each projects}}
+<div class="container">
 <h4>{{owner.name}}</h4>
 <p><a href="/dashboard/{{id}}">{{id}}</a></p>
 <p><a href="{{web_url}}" target="_blank">{{name}}</a></p>
+</div>
 {{/each}}

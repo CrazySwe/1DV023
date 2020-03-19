@@ -38,6 +38,7 @@
     "express-hbs": "^2.3.1",
     "express-session": "^1.17.0",
     "gitlab": "^14.2.2",
+    "helmet": "^3.21.3",
     "socket.io": "^2.3.0"
   }
 }
