@@ -3,4 +3,5 @@
 git --work-tree=/var/www/issuelister --git-dir=/var/repo/site.git checkout -f
 cd /var/www/issuelister
 npm install --production
-pm2 start app.js --name=issuelister
+(pm2 delete 'issuelister' || true) \
+&& pm2 start app.js --name=issuelister
