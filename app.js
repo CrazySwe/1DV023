@@ -69,7 +69,6 @@ io.use(function (socket, next) {
 })
 
 app.set('socketio', io)
-// Middleware saving the socket
 io.on('connection', function (socket) {
   // join the project room.
   socket.join(socket.request.session.chosenproject)
