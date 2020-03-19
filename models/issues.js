@@ -7,6 +7,12 @@
 'use strict'
 const Gitlab = require('gitlab').Gitlab
 
+/**
+ * Function that fetches the issues from a specific project.
+ *
+ * @param {string} oaToken - The Oauth token string.
+ * @param {string} pId  - The project ID.
+ */
 const issues = async function (oaToken, pId) {
   try {
     const api = new Gitlab({

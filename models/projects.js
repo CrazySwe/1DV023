@@ -7,6 +7,11 @@
 'use strict'
 const Gitlab = require('gitlab').Gitlab
 
+/**
+ * Function that fetches all projects where access token is a member of.
+ *
+ * @param {string} oaToken - The Oauth token string.
+ */
 const projects = async function (oaToken) {
   try {
     const api = new Gitlab({
