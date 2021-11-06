@@ -1,0 +1,18 @@
+{{#if snippetData}}
+<form class="pure-form pure-form-stacked" action="/snippet/update" method="POST">
+<fieldset>
+    <legend>Edit Snippet</legend>
+    <input type="hidden" name="id" value="{{snippetData.id}}" />
+        <label for="title">Title</label>
+        <input type="text" name="title" value="{{snippetData.title}}">
+       
+    <label for="snippetbody">Snippet:</label>
+    <textarea name="snippetbody">{{snippetData.body}}</textarea>
+
+        <label for="tags">Tags (separate with commas)</label>
+        <input type="text" placeholder="tag1,tag2,tag3..." name="tags" value="{{snippetData.tags}}">
+
+    <input class="pure-button pure-button-primary" type="submit" value="Update Snippet">
+</fieldset>
+</form>
+{{/if}}

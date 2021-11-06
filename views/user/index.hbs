@@ -1,0 +1,10 @@
+<p>Show users snippets here.</p>
+
+{{#if snippets.length}}
+  {{#each snippets}}
+    <h2><a href="/snippet/{{this.id}}">{{this.title}}</a></h2>
+    <p>{{this.creationDate}}</p>
+    <a href="/snippet/edit/{{this.id}}">Edit</a>
+    <a href="/snippet/delete/{{this.id}}">Delete</a>
+  {{/each}}
+{{/if}}

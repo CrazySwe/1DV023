@@ -1,0 +1,47 @@
+{
+  "name": "assignment-2",
+  "version": "1.0.0",
+  "description": "kc222en-assignment-2",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "start-dev": "nodemon app.js",
+    "lint": "npx eslint . || exit 0",
+    "lint:fix": "npx eslint . --fix || exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.lnu.se:1dv023/student/kc222en/assignment-2.git"
+  },
+  "keywords": [
+    "1DV023",
+    "snippets",
+    "assignment2"
+  ],
+  "author": "Kevin Cederholm",
+  "license": "MIT",
+  "devDependencies": {
+    "@lnu/eslint-config": "^1.0.6",
+    "eslint": "^6.8.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsdoc": "^21.0.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "nodemon": "^2.0.2"
+  },
+  "eslintConfig": {
+    "extends": "@lnu"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
+    "express-hbs": "^2.3.0",
+    "express-session": "^1.17.0",
+    "helmet": "^3.21.3",
+    "http-errors": "^1.7.3",
+    "moment": "^2.24.0",
+    "mongoose": "^5.8.11",
+    "morgan": "^1.9.1"
+  }
+}

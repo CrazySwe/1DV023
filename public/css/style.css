@@ -1,0 +1,16 @@
+
+/* Alert css */
+
+div.alert {
+  padding:10px;
+}
+
+div.alert-danger {
+  border: 1px solid red;
+  background-color: lightcoral;
+}
+
+div.alert-success {
+  border: 1px solid green;
+  background-color:lightgreen;
+}
